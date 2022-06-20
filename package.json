@@ -1,11 +1,11 @@
 {
   "private": true,
   "name": "imkit-vue",
-  "version": "1.0.5",
+  "version": "5.2.1",
   "description": "IMkit 基于 IMLib 通用化的 UI 封装，定位于通用的聊天会话场景（单聊/群聊），帮助开发者快速搭建一个功能集相对完整的即时 IM 通讯产品，提高接入效率。",
   "dependencies": {
-    "@rongcloud/imkit": "^5.0.0",
-    "@rongcloud/imlib-next": "^5.2.4",
+    "@rongcloud/imlib-next": "^5.3.3",
+    "@rongcloud/imkit": "^5.2.1",
     "vue": "^3.2.33",
     "vue-i18n": "^7.8.1"
   },

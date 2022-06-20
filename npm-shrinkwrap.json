@@ -1,16 +1,16 @@
 {
   "name": "imkit-vue",
-  "version": "1.0.5",
+  "version": "5.3.3",
   "lockfileVersion": 2,
   "requires": true,
   "packages": {
     "": {
       "name": "imkit-vue",
-      "version": "1.0.5",
+      "version": "5.3.3",
       "license": "MIT",
       "dependencies": {
-        "@rongcloud/imkit": "^5.0.0",
-        "@rongcloud/imlib-next": "^5.2.4",
+        "@rongcloud/imkit": "^5.2.1",
+        "@rongcloud/imlib-next": "^5.3.3",
         "vue": "^3.2.33",
         "vue-i18n": "^7.8.1"
       },
@@ -413,17 +413,16 @@
       "dev": true
     },
     "node_modules/@rongcloud/engine": {
-      "version": "5.2.4",
-      "resolved": "https://registry.npmjs.org/@rongcloud/engine/-/engine-5.2.4.tgz",
-      "integrity": "sha512-4Ih8SCIInxZcAZN5g4jX5dxWRQvWS1y3IcycFBnXAzXJXrLwwdMlVFxjXlWHGUEJNAwH+EEpj1OlYlCFFFdJQw==",
-      "engines": {
-        "node": ">=10.0.0"
-      }
+      "version": "5.3.3",
+      "resolved": "http://npm.rongcloud.net/@rongcloud%2fengine/-/engine-5.3.3.tgz",
+      "integrity": "sha512-MehprBwwlxObC6k9A6MyV8Von6kTMG69vCV+pslpiQwLe76bHCjAdeQEz8v5nD0IFgjswxFgtkJ0dbuJnMEdYg==",
+      "license": "LGPL 2.1",
+      "peer": true
     },
     "node_modules/@rongcloud/imkit": {
-      "version": "5.0.0",
-      "resolved": "https://registry.npmjs.org/@rongcloud/imkit/-/imkit-5.0.0.tgz",
-      "integrity": "sha512-i7rUW2iiYP8i/3cFxJ3nbpVbk4DYYfEleSA8CbubVRgxLjrGTWbpjJiSNMaIlFdqS6UrfA2ErD3ONYYG/NJT3g==",
+      "version": "5.2.1",
+      "resolved": "https://registry.npmjs.org/@rongcloud/imkit/-/imkit-5.2.1.tgz",
+      "integrity": "sha512-bwBl1tRwvycFKAB96RXydUBWo5QGJdmouFQM6WoRr6QgdUmJMaH49obvZ8uJijl+2Bsf78opIt/2lFqpUazYOw==",
       "hasShrinkwrap": true,
       "dependencies": {
         "@better-scroll/core": "^2.4.2",
@@ -431,6 +430,10 @@
         "@better-scroll/pull-down": "^2.4.2",
         "@better-scroll/pull-up": "^2.4.2",
         "@stencil/core": "2.7.1"
+      },
+      "peerDependencies": {
+        "@rongcloud/engine": "^5.3.3",
+        "@rongcloud/imlib-next": "^5.3.3"
       }
     },
     "node_modules/@rongcloud/imkit/node_modules/@ampproject/remapping": {
@@ -2238,27 +2241,18 @@
       }
     },
     "node_modules/@rongcloud/imkit/node_modules/@rongcloud/engine": {
-      "version": "5.2.4",
-      "resolved": "https://registry.npmjs.org/@rongcloud/engine/-/engine-5.2.4.tgz",
-      "integrity": "sha512-4Ih8SCIInxZcAZN5g4jX5dxWRQvWS1y3IcycFBnXAzXJXrLwwdMlVFxjXlWHGUEJNAwH+EEpj1OlYlCFFFdJQw==",
-      "extraneous": true,
-      "engines": {
-        "node": ">=10.0.0"
-      }
+      "version": "5.3.3",
+      "resolved": "https://registry.npmjs.org/@rongcloud/engine/-/engine-5.3.3.tgz",
+      "integrity": "sha512-MehprBwwlxObC6k9A6MyV8Von6kTMG69vCV+pslpiQwLe76bHCjAdeQEz8v5nD0IFgjswxFgtkJ0dbuJnMEdYg==",
+      "peer": true
     },
     "node_modules/@rongcloud/imkit/node_modules/@rongcloud/imlib-next": {
-      "version": "5.2.4",
-      "resolved": "https://registry.npmjs.org/@rongcloud/imlib-next/-/imlib-next-5.2.4.tgz",
-      "integrity": "sha512-4sZ6e8CvSVA7d+G4QecuWyB/A9t72zk0mKxc1MRCq92g+603v2+OZyUyYaKo6bgT//UCfXQai/v/FWXWjo7NFA==",
-      "extraneous": true,
-      "dependencies": {
-        "@rongcloud/engine": "5.2.4"
-      },
-      "engines": {
-        "node": ">=10.0.0"
-      },
+      "version": "5.3.3",
+      "resolved": "https://registry.npmjs.org/@rongcloud/imlib-next/-/imlib-next-5.3.3.tgz",
+      "integrity": "sha512-AIAb5S/O0UGQy5fNRnyq1pI8vM83C88tJX9D/ZQN9bdmwSI6VowRfkchO3c3/wKf8DcVYCrt30hpEDiQ9vi0aw==",
+      "peer": true,
       "peerDependencies": {
-        "@rongcloud/engine": "5.2.4"
+        "@rongcloud/engine": "=5.3.3"
       }
     },
     "node_modules/@rongcloud/imkit/node_modules/@stencil/core": {
@@ -3598,17 +3592,12 @@
       "extraneous": true
     },
     "node_modules/@rongcloud/imlib-next": {
-      "version": "5.2.4",
-      "resolved": "https://registry.npmjs.org/@rongcloud/imlib-next/-/imlib-next-5.2.4.tgz",
-      "integrity": "sha512-4sZ6e8CvSVA7d+G4QecuWyB/A9t72zk0mKxc1MRCq92g+603v2+OZyUyYaKo6bgT//UCfXQai/v/FWXWjo7NFA==",
-      "dependencies": {
-        "@rongcloud/engine": "5.2.4"
-      },
-      "engines": {
-        "node": ">=10.0.0"
-      },
+      "version": "5.3.3",
+      "resolved": "http://npm.rongcloud.net/@rongcloud%2fimlib-next/-/imlib-next-5.3.3.tgz",
+      "integrity": "sha512-AIAb5S/O0UGQy5fNRnyq1pI8vM83C88tJX9D/ZQN9bdmwSI6VowRfkchO3c3/wKf8DcVYCrt30hpEDiQ9vi0aw==",
+      "license": "LGPL 2.1",
       "peerDependencies": {
-        "@rongcloud/engine": "5.2.4"
+        "@rongcloud/engine": "=5.3.3"
       }
     },
     "node_modules/@types/body-parser": {
@@ -9525,14 +9514,15 @@
       "dev": true
     },
     "@rongcloud/engine": {
-      "version": "5.2.4",
-      "resolved": "https://registry.npmjs.org/@rongcloud/engine/-/engine-5.2.4.tgz",
-      "integrity": "sha512-4Ih8SCIInxZcAZN5g4jX5dxWRQvWS1y3IcycFBnXAzXJXrLwwdMlVFxjXlWHGUEJNAwH+EEpj1OlYlCFFFdJQw=="
+      "version": "5.3.3",
+      "resolved": "http://npm.rongcloud.net/@rongcloud%2fengine/-/engine-5.3.3.tgz",
+      "integrity": "sha512-MehprBwwlxObC6k9A6MyV8Von6kTMG69vCV+pslpiQwLe76bHCjAdeQEz8v5nD0IFgjswxFgtkJ0dbuJnMEdYg==",
+      "peer": true
     },
     "@rongcloud/imkit": {
-      "version": "5.0.0",
-      "resolved": "https://registry.npmjs.org/@rongcloud/imkit/-/imkit-5.0.0.tgz",
-      "integrity": "sha512-i7rUW2iiYP8i/3cFxJ3nbpVbk4DYYfEleSA8CbubVRgxLjrGTWbpjJiSNMaIlFdqS6UrfA2ErD3ONYYG/NJT3g==",
+      "version": "5.2.1",
+      "resolved": "https://registry.npmjs.org/@rongcloud/imkit/-/imkit-5.2.1.tgz",
+      "integrity": "sha512-bwBl1tRwvycFKAB96RXydUBWo5QGJdmouFQM6WoRr6QgdUmJMaH49obvZ8uJijl+2Bsf78opIt/2lFqpUazYOw==",
       "requires": {
         "@better-scroll/core": "^2.4.2",
         "@better-scroll/mouse-wheel": "^2.4.2",
@@ -10815,18 +10805,16 @@
           }
         },
         "@rongcloud/engine": {
-          "version": "5.2.4",
-          "resolved": "https://registry.npmjs.org/@rongcloud/engine/-/engine-5.2.4.tgz",
-          "integrity": "sha512-4Ih8SCIInxZcAZN5g4jX5dxWRQvWS1y3IcycFBnXAzXJXrLwwdMlVFxjXlWHGUEJNAwH+EEpj1OlYlCFFFdJQw==",
-          "extraneous": true
+          "version": "5.3.3",
+          "resolved": "https://registry.npmjs.org/@rongcloud/engine/-/engine-5.3.3.tgz",
+          "integrity": "sha512-MehprBwwlxObC6k9A6MyV8Von6kTMG69vCV+pslpiQwLe76bHCjAdeQEz8v5nD0IFgjswxFgtkJ0dbuJnMEdYg==",
+          "peer": true
         },
         "@rongcloud/imlib-next": {
-          "version": "https://registry.npmjs.org/@rongcloud/imlib-next/-/imlib-next-5.2.4.tgz",
-          "integrity": "sha512-4sZ6e8CvSVA7d+G4QecuWyB/A9t72zk0mKxc1MRCq92g+603v2+OZyUyYaKo6bgT//UCfXQai/v/FWXWjo7NFA==",
-          "extraneous": true,
-          "requires": {
-            "@rongcloud/engine": "5.2.4"
-          }
+          "version": "https://registry.npmjs.org/@rongcloud/imlib-next/-/imlib-next-5.3.3.tgz",
+          "integrity": "sha512-AIAb5S/O0UGQy5fNRnyq1pI8vM83C88tJX9D/ZQN9bdmwSI6VowRfkchO3c3/wKf8DcVYCrt30hpEDiQ9vi0aw==",
+          "peer": true,
+          "requires": {}
         },
         "@stencil/core": {
           "version": "2.7.1",
@@ -11901,12 +11889,10 @@
       }
     },
     "@rongcloud/imlib-next": {
-      "version": "5.2.4",
-      "resolved": "https://registry.npmjs.org/@rongcloud/imlib-next/-/imlib-next-5.2.4.tgz",
-      "integrity": "sha512-4sZ6e8CvSVA7d+G4QecuWyB/A9t72zk0mKxc1MRCq92g+603v2+OZyUyYaKo6bgT//UCfXQai/v/FWXWjo7NFA==",
-      "requires": {
-        "@rongcloud/engine": "5.2.4"
-      }
+      "version": "5.3.3",
+      "resolved": "http://npm.rongcloud.net/@rongcloud%2fimlib-next/-/imlib-next-5.3.3.tgz",
+      "integrity": "sha512-AIAb5S/O0UGQy5fNRnyq1pI8vM83C88tJX9D/ZQN9bdmwSI6VowRfkchO3c3/wKf8DcVYCrt30hpEDiQ9vi0aw==",
+      "requires": {}
     },
     "@types/body-parser": {
       "version": "1.19.2",

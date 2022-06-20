@@ -16,12 +16,16 @@ export default {
   getConversationProfile: (conversations) => {
     const promises = [];
     conversations.forEach((conversation) => {
+      let param = {
+        ...conversation,
+        name: conversation.targetId,
+        portraitUri: R.image("60x60"),
+      }
+      if(conversation.conversationType == 3){
+        param.memberCount = 10;// 客户应用服务器返回群组内成员数量。
+      }
       promises.push(
-        Promise.resolve({
-          ...conversation,
-          name: conversation.targetId,
-          portraitUri: R.image("60x60"),
-        })
+        Promise.resolve(param)
       );
     });
     return Promise.all(promises);

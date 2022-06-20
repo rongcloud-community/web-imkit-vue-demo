@@ -1,6 +1,14 @@
 <template>
   <div class="main">
-    <div class="header"><span>IMChat</span></div>
+    <div class="header">
+      <button class="header-btn" @click='changeUser()'>切换用户</button>
+      <button class="header-btn" @click='selectConversation()'>选中指定会话</button>
+      <button class="header-btn" @click='sendCustomMessage(1)'>发送自定义消息</button>
+      <button class="header-btn" @click='sendCustomMessage(0)'>发送通知类自定义消息</button>
+      <select class="header-btn" v-model="lang" @change="changeLanguage">
+        <option v-for="(item) in langArr" :value="item.lang" :key="item.lang">{{item.value}}</option>
+      </select>
+    </div>
     <div class="main-wrapper">
       <div class="wrapper-left">
         <conversation-list ref="conversationList" base-size="10px" />
@@ -19,16 +27,38 @@
   </div>
 </template>
 <script>
-
+import { imkit, CoreEvent} from "@rongcloud/imkit";
 export default {
   data() {
     return {
       editorVisible: false,
+      lang: "",
+      langArr: [{
+          lang: "zh_CN",
+          value: "中文",
+        },
+        {
+          lang: "en",
+          value: "英文",
+        },
+      ],
       imageUrl: '',
-      showImage: false
+      showImage: false,
+      switchConversationList:{}
     };
   },
-  mounted() {
+  async mounted() {
+    localStorage.getItem("lang") && localStorage.removeItem("lang");
+    const res =  await imkit.connect(TOKEN);
+    console.info('链接结果打印：', res.data);
+    if(res.data){
+      window.curUser = res.data.userId;
+    }
+    // 触发加载会话列表
+    this.lang = imkit.lang
+    // 加载会话列表
+    imkit.emit(CoreEvent.CONVERSATION, true);
+
     const conversationList = this.$refs.conversationList;
 
     //添加点击会话监听
@@ -73,9 +103,11 @@ export default {
       console.info("处理删除会话后的操作");
     },
 
+    changeLanguage() {
+      imkit.changeLanguage({ lang: this.lang });
+    },
+
     handleTapMessage(e) {
-      console.info(e.detail)
-      // const data = e.detail;
       if (e.detail.type === "richContent") {
         window.open(e.detail.url, "_blank");
         return;
@@ -88,6 +120,50 @@ export default {
         return;
       }
       this.messageData = Object.assign({ time: Date.now() }, e.detail);
+    },
+
+    selectConversation() {
+      let conversationInfoStr = prompt("请输入：会话类型 & targetid","1&11");
+      if(conversationInfoStr){
+        let conversationInfo = conversationInfoStr.split('&');
+        let conversationType = parseInt(conversationInfo[0]);
+        let targetId = conversationInfo[1];
+        if (conversationType && targetId!=""){
+          imkit.selectConversation({
+            conversationType: conversationType, // 会话类型
+            targetId: targetId, // targetId
+          });
+        }
+      }
+    },
+
+    sendCustomMessage(type) {
+      let conversationInfoStr = prompt("请输入会话类型 & targetid & name & age","1&11&张三&123");
+      if(conversationInfoStr){
+        let conversationInfo =  conversationInfoStr.split('&');
+        let conversationType = parseInt(conversationInfo[0]);
+        let targetId = conversationInfo[1];
+        let name = conversationInfo[2];
+        let age = conversationInfo[3];
+        let content = { name, age }
+        let messagebody = null;
+        type === 1 ? messagebody = new PersonMessage(content) : messagebody = new GroupMessage(content)
+
+        imkit.sendMessage({
+          conversationType: conversationType,
+          targetId: targetId,
+        }, messagebody, null).then(res => {
+          console.info(res)
+        })
+      }
+    },
+
+    changeUser() {
+      let token = prompt("请输入 token");
+      imkit.disconnect();
+      imkit.connect(token).then((res)=> {
+        console.info('change user', res)
+      })
     }
   },
 };
@@ -103,6 +179,15 @@ export default {
 
 .header {
   margin: 0 auto;
+  height: 40px;
+  width: 100%;
+  background: #ececec;
+  line-height: 40px;
+  text-align: right;
+}
+
+.header-btn{
+  margin: 0 10px;
 }
 
 .main-wrapper {
@@ -118,7 +203,7 @@ export default {
 }
 
 .wrapper-right {
-  width: 100%;
+  width: 75%;
   flex: 1;
 }
 

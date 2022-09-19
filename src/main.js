@@ -13,6 +13,13 @@ import custom_service from "./custom_service";
 
 // 2、自定义消息接口 - 暂不开放-无需修改
 import custom_message from "./custom_message";
+
+// 3. 自定义会话接口
+import custom_conversation from "./custom_conversation";
+
+// 4. 处理消息
+import customDisplayMessage from "./will_message";
+
 /*⚠️ ⚠️ ⚠️ ⚠️ ⚠️ -- 第三方集成区域 -- ⚠️ ⚠️ ⚠️ ⚠️ */
 /* ------------------------------------------- */
 import { createApp, h } from "vue";
@@ -27,12 +34,14 @@ const app = createApp({
   render: () => h(App),
   async beforeCreate() {
     // 初始化imkit
-    let libOption = {appkey: APPKEY}
+    let libOption = {appkey: APPKEY,logLevel:0}
 
     imkit.init({
       service: custom_service,
       libOption: libOption,
-      customMessage: custom_message
+      customIntercept: custom_conversation,
+      customMessage: custom_message,
+      customDisplayMessage: customDisplayMessage
     });
 
     const PersonMessage = imkit.registerMessageType('kit:person', true, true, [], false)

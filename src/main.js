@@ -1,10 +1,9 @@
 /*⚠️ ⚠️ ⚠️ ⚠️ ⚠️ -- 第三方集成区域 -- ⚠️ ⚠️ ⚠️ ⚠️ */
 // ⚠️ 注意替换为自己的AppKey （以下是测试appkey）⚠️
-const APPKEY = "";
+const APPKEY = "8w7jv4qb82uyy";
 
 // ⚠️ 注意替换为当前用户的真实Token（以下是测试token）⚠️
-const TOKEN = "";
-
+const TOKEN = "FqgiHCRo7OXk1xmbzBlI1Y/ZUK1UbYr8@yhxs.cn.rongnav.com;yhxs.cn.rongcfg.com";
 window.APPKEY = APPKEY;
 window.TOKEN = TOKEN;
 
@@ -26,6 +25,8 @@ import { createApp, h } from "vue";
 
 import App from "./App.vue";
 
+import * as RongIMLib from '@rongcloud/imlib-next'
+
 import { defineCustomElements, core as imkit, CoreEvent } from "@rongcloud/imkit";
 
 defineCustomElements()
@@ -34,13 +35,16 @@ const app = createApp({
   render: () => h(App),
   async beforeCreate() {
     // 初始化imkit
-    let libOption = {appkey: APPKEY,logLevel:0}
+    let libOption = {appkey: APPKEY,logOutputLevel: 4}
 
+    RongIMLib.init(libOption);
     imkit.init({
+      appkey: APPKEY,
       service: custom_service,
       libOption: libOption,
       customIntercept: custom_conversation,
       customMessage: custom_message,
+      customIntercept: custom_conversation,
       customDisplayMessage: customDisplayMessage
     });
 

@@ -15,7 +15,6 @@ const conversationCustomMenu = [
 const messaggeCustomMenu = [
   {
     name: function (message) {
-      if(message.messageType !== 'RC:TxtMsg')
       return '自定义'
     },
     callback: function (message) {

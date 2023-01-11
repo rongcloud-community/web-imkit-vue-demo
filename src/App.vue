@@ -1,18 +1,6 @@
 <template>
   <div class="pop-up">
     <div class="main">
-      <div class="header">
-        <button class="header-btn" @click='changeGroupInfo()'>修改群成员信息</button>
-        <button class="header-btn" @click='changeUserInfo()'>修改当前用户信息</button>
-        <button class="header-btn" @click='changeConversationInfo()'>修改会话信息</button>
-        <button class="header-btn" @click='changeUser()'>切换用户</button>
-        <button class="header-btn" @click='selectConversation()'>选中指定会话</button>
-        <button class="header-btn" @click='sendCustomMessage(1)'>发送带用户头像自定义消息</button>
-        <button class="header-btn" @click='sendCustomMessage(0)'>发送不携带用户头像自定义消息</button>
-        <select class="header-btn" v-model="lang" @change="changeLanguage">
-          <option v-for="(item) in langArr" :value="item.lang" :key="item.lang">{{item.value}}</option>
-        </select>
-      </div>
       <div class="main-wrapper">
         <div class="wrapper-left">
           <conversation-list ref="conversationList" base-size="10px" />
@@ -25,7 +13,7 @@
             <div class="chat-bottom">
               <message-editor base-size="10px" />
             </div>
-          </div>
+         </div>
         </div>
       </div>
       <div class="tip">
@@ -34,11 +22,42 @@
         </div>
       </div>
     </div>
+    <div class="btn">
+      <button class="header-btn" @click='changeGroupInfo()'>修改群成员信息</button>
+      <button class="header-btn" @click='changeUserInfo()'>修改当前用户信息</button>
+      <button class="header-btn" @click='changeConversationInfo()'>修改会话信息</button>
+      <button class="header-btn" @click='changeUser()'>切换用户</button>
+      <button class="header-btn" @click='selectConversation()'>选中指定会话</button>
+      <button class="header-btn" @click='sendCustomMessage(1)'>发送带用户头像自定义消息</button>
+      <button class="header-btn" @click='sendCustomMessage(0)'>发送不携带用户头像自定义消息</button>
+      <button class="header-btn" @click='deleteConversation()'>删除会话</button>
+      <button class="header-btn" @click='setMaxRecallDuration()'>设置撤回消息有效期</button>
+      <select class="header-btn" v-model="lang" @change="changeLanguage">
+        <option v-for="(item) in langArr" :value="item.lang" :key="item.lang">{{item.value}}</option>
+      </select>
+      <button v-if="!showMessageMenu" class="header-btn" @click='disableMessageMenuFun()'>设置消息右键</button>
+        <div v-if="showMessageMenu">
+          <button class="header-btn" @click='disableMessageMenuFun()'>确认隐藏</button>
+          <span v-for="(item) in messageMenuList" :value="item.name" :key="item.name">
+            <input :value="item.value" type="checkbox" :id="item.value"  v-model="disableMenuMessage">
+            <label :for="item.value">{{item.name}}</label>
+          </span>
+        </div>
+        <button v-if="!showConversationMenu" class="header-btn" @click='disableConversationMenuFun()'>设置会话右键</button>
+        <div v-if="showConversationMenu">
+          <button class="header-btn" @click='disableConversationMenuFun()'>确认隐藏</button>
+          <span v-for="(item) in conversationMenuList" :value="item.name" :key="item.name">
+            <input :value="item.value" type="checkbox" :id="item.value"  v-model="disableMenuConversation">
+            <label :for="item.value">{{item.name}}</label>
+          </span>
+        </div>
+    </div>
   </div>
 </template>
 <script>
-import { imkit, CoreEvent} from "@rongcloud/imkit";
+import { imkit, CoreEvent, DisabledMessageContextMenu, DisabledConversationontextMenu} from "@rongcloud/imkit";
 import { messaggeCustomMenu, conversationCustomMenu, forwardCallback} from './custom_menu'
+import * as RongIMLib from '@rongcloud/imlib-next'
 import { Random as R } from "mockjs";
 export default {
   data() {
@@ -54,16 +73,46 @@ export default {
           value: "英文",
         },
       ],
+      conversationMenuList:[{
+        value: DisabledConversationontextMenu.Top,
+        name: '置顶'
+      },{
+        value: DisabledConversationontextMenu.Delete,
+        name: '删除'
+      },{
+        value: DisabledConversationontextMenu.Notification,
+        name: '免打扰'
+      }],
+      disableMenuMessage: [],
+      disableMenuConversation: [],
+      messageMenuList: [{
+        value: DisabledMessageContextMenu.Forward,
+        name: '转发'
+      },{
+        value: DisabledMessageContextMenu.Delete,
+        name: '删除'
+      },{
+        value: DisabledMessageContextMenu.Reference,
+        name: '引用'
+      },{
+        value: DisabledMessageContextMenu.Recall,
+        name: '撤回'
+      },{
+        value: DisabledMessageContextMenu.Copy,
+        name: '复制'
+      }],
       imageUrl: '',
       showImage: false,
       switchConversationList:{},
-      conversation: null
+      conversation: null,
+      showMessageMenu: false,
+      showConversationMenu: false
     };
   },
   async mounted() {
 
     localStorage.getItem("lang") && localStorage.removeItem("lang");
-    const res =  await imkit.connect(TOKEN);
+    const res =  await RongIMLib.connect(TOKEN);
     console.info('链接结果打印：', res.data);
     if(res.data){
       window.curUser = res.data.userId;
@@ -134,6 +183,25 @@ export default {
     messageList.removeEventListener("tapMessage", this.handleTapMessage);
   },
   methods: {
+    disableMessageMenuFun() {
+      if(this.showMessageMenu){
+        const messageList = this.$refs.messageList;
+        console.info(this.disableMenuMessage);
+        messageList.disableMenu = this.disableMenuMessage;
+        this.showMessageMenu = false;
+        return;
+      }
+      this.showMessageMenu = true;
+    },
+    disableConversationMenuFun() {
+      if(this.showConversationMenu){
+        const conversationList = this.$refs.conversationList;
+        conversationList.disableMenu = this.disableMenuConversation;
+        this.showConversationMenu = false;
+        return;
+      }
+      this.showConversationMenu = true;
+    },
     handleTapConversation(con) {
       //处理点击会话后的操作
     },
@@ -201,11 +269,11 @@ export default {
     changeUser() {
       let token = prompt("请输入 token");
       if(token && token !== TOKEN){
-        imkit.disconnect();
-        imkit.connect(token).then(({code, msg})=> {
+        RongIMLib.disconnect();
+        RongIMLib.connect(token).then(({code, msg})=> {
           if(code !== 0) {
             alert("切换用户失败，请检查 token 与 appkey 信息！详细报错原因：" + msg)
-            imkit.connect(TOKEN).then(({code, msg})=> {
+            RongIMLib.connect(TOKEN).then(({code, msg})=> {
               console.info('切换用户失败重新链接上一个用户')
             })
             return;
@@ -217,6 +285,10 @@ export default {
     },
 
     changeGroupInfo() {
+      if (!this.conversation) {
+        alert('当前无选中会话，无法判断需要更新会话信息，请先选中');
+        return;
+      }
       const info = [
       {
         id: '22',
@@ -242,15 +314,41 @@ export default {
     },
 
     changeConversationInfo() {
-      let info = {
-        ...this.conversation,
-        name: '测试会话修改',
-        portraitUri: R.image("60x60"),
+      if (this.conversation) {
+        let info = {
+          ...this.conversation,
+          name: '测试会话修改',
+          portraitUri: R.image("60x60"),
+        }
+        if(this.conversation.conversationType == 3){
+          info.memberCount = 2;// 客户应用服务器返回群组内成员数量。
+        }
+        imkit.updateConversationProfile(this.conversation,info);
+        return;
       }
-      if(this.conversation.conversationType == 3){
-        info.memberCount = 2;// 客户应用服务器返回群组内成员数量。
+      alert('当前无选中会话，无法判断需要更新会话信息，请先选中')
+    },
+
+    deleteConversation() {
+      let conversationInfoStr = prompt("请输入：会话类型 & targetid","1&11");
+      if(conversationInfoStr){
+        let conversationInfo = conversationInfoStr.split('&');
+        let conversationType = parseInt(conversationInfo[0]);
+        let targetId = conversationInfo[1];
+        if (conversationType && targetId!=""){
+          imkit.removeConversation({
+            conversationType: conversationType,
+            targetId: targetId,
+          })
+        }
       }
-      imkit.updateConversationProfile(this.conversation,info)
+
+    },
+
+    setMaxRecallDuration() {
+      const messageList = this.$refs.messageList;
+      const time = prompt("请输入撤回消息最大有效期，时间单位为’秒’，默认 120s","120")
+      messageList.maxRecallDuration =  time || 120;
     }
   },
 };
@@ -271,8 +369,8 @@ export default {
 }
 .main {
   display: flex;
-  width: 70%;
-  height: 70%;
+  width: calc(100% - 200px);
+  height: 90%;
   flex-direction: column;
 }
 
@@ -284,8 +382,16 @@ export default {
   text-align: right;
 }
 
+.btn {
+  width: 100px;
+  position: absolute;
+  right: 0px;
+  top: 5%;
+  height: 100%;
+  color: #fff;
+}
 .header-btn{
-  margin: 0 10px;
+  margin: 5px 10px;
 }
 
 .main-wrapper {
@@ -319,8 +425,8 @@ export default {
   background: #fff;
 }
 .tip {
-      position: absolute;
-    right: 0;
+  position: absolute;
+  right: 0;
 }
 .tip div {
   width: 200px;

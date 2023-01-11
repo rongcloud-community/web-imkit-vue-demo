@@ -1,9 +1,9 @@
 /*⚠️ ⚠️ ⚠️ ⚠️ ⚠️ -- 第三方集成区域 -- ⚠️ ⚠️ ⚠️ ⚠️ */
 // ⚠️ 注意替换为自己的AppKey （以下是测试appkey）⚠️
-const APPKEY = "8w7jv4qb82uyy";
+const APPKEY = "";
 
 // ⚠️ 注意替换为当前用户的真实Token（以下是测试token）⚠️
-const TOKEN = "FqgiHCRo7OXk1xmbzBlI1Y/ZUK1UbYr8@yhxs.cn.rongnav.com;yhxs.cn.rongcfg.com";
+const TOKEN = "";
 window.APPKEY = APPKEY;
 window.TOKEN = TOKEN;
 

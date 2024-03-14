@@ -14,6 +14,7 @@ export default {
   // 获取会话详情
   // (会话 targetId 和会话类型 conversationType ) - 包括头像，会话(单聊和群聊)名称，群组头像
   getConversationProfile: (conversations) => {
+    console.warn('调用获取会话详情', conversations)
     const promises = [];
     conversations.forEach((conversation) => {
       let param = {
@@ -24,11 +25,33 @@ export default {
       if(conversation.conversationType == 3){
         param.memberCount = 10;// 客户应用服务器返回群组内成员数量。
       }
+      const pro = new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(param)
+        }, 0)
+      })
       promises.push(
-        Promise.resolve(param)
+        // Promise.resolve(param)
+        pro
       );
     });
+    console.log(promises)
     return Promise.all(promises);
+    // const promises = [];
+    // conversations.forEach((conversation) => {
+    //   let param = {
+    //     ...conversation,
+    //     name: conversation.targetId,
+    //     portraitUri: R.image("60x60"),
+    //   }
+    //   if(conversation.conversationType == 3){
+    //     param.memberCount = 10;// 客户应用服务器返回群组内成员数量。
+    //   }
+    //   promises.push(
+    //     Promise.resolve(param)
+    //   );
+    // });
+    // return Promise.all(promises);
   },
 
   // 获取群组详情

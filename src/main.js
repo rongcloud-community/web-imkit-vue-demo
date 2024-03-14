@@ -1,9 +1,9 @@
 /*⚠️ ⚠️ ⚠️ ⚠️ ⚠️ -- 第三方集成区域 -- ⚠️ ⚠️ ⚠️ ⚠️ */
 // ⚠️ 注意替换为自己的AppKey （以下是测试appkey）⚠️
-const APPKEY = "";
+const APPKEY = "pvxdm17jpwibr";
 
 // ⚠️ 注意替换为当前用户的真实Token（以下是测试token）⚠️
-const TOKEN = "";
+const TOKEN = "H6CWDkr0gQe1/Ur2Mc9iie4NvAylVHKsAYpTpwSJmEg=@4x5h.cn.rongnav.com;4x5h.cn.rongcfg.com";
 window.APPKEY = APPKEY;
 window.TOKEN = TOKEN;
 
@@ -11,7 +11,7 @@ window.TOKEN = TOKEN;
 import custom_service from "./custom_service";
 
 // 2、自定义消息接口 - 暂不开放-无需修改
-import custom_message from "./custom_message";
+import custom_message from "./custom_message";``
 
 // 3. 自定义会话接口
 import custom_conversation from "./custom_conversation";
@@ -22,14 +22,24 @@ import customDisplayMessage from "./will_message";
 /*⚠️ ⚠️ ⚠️ ⚠️ ⚠️ -- 第三方集成区域 -- ⚠️ ⚠️ ⚠️ ⚠️ */
 /* ------------------------------------------- */
 import { createApp, h } from "vue";
+import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
 
-import App from "./App.vue";
+import App from "./APP.vue";
 
 import * as RongIMLib from '@rongcloud/imlib-next'
 
 import { defineCustomElements, core as imkit, CoreEvent } from "@rongcloud/imkit";
 
 defineCustomElements()
+
+const routes = [
+  { path: '/', name:'im', component: () => import('./Im.vue')},
+  { path: '/home',  component: () => import('./Home.vue') },
+]
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes // (缩写) 相当于 routes: routes
+})
 
 const app = createApp({
   render: () => h(App),
@@ -55,4 +65,5 @@ const app = createApp({
   }
 });
 
+app.use(router);
 app.mount("#app");
